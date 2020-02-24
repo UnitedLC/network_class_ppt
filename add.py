@@ -10,8 +10,8 @@ def inputurl():
         url=input()
     return urllist
 
-#os.system("git pull origin master")
-#os.system("git pull second master")
+os.system("git pull origin master")
+os.system("git pull second master")
 
 
 print("年级（如：初一）:",end=" ")
@@ -52,3 +52,8 @@ fileout=json.dumps(filejs,sort_keys=True,indent=4,ensure_ascii=False)
 file=open(grade+"/"+subject+".json","w",encoding='utf-8')
 file.write(fileout)
 file.close()
+
+os.system("git add *")
+os.system("git commit")
+os.system("git push origin master")
+os.system("git push second master")
