@@ -54,6 +54,6 @@ file.write(fileout)
 file.close()
 
 os.system("git add *")
-os.system("git commit")
+os.system("git commit -m \"by python\"")
 os.system("git push origin master")
 os.system("git push second master")
