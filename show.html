@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>PPT SHOW</title>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+
+</script>
+<script>
+$(document).ready(function(){
+$("#bu").click(function(){
+	$.get("https://gitee.com/api/v5/repos/unitedlc/network_class_ppt/contents/"+$("#grade").val()+"/"+$("#subject").val()+".json",
+		function(data,status){
+			if(status!="success"){
+				alert("失败：无法获得该年级/学科的信息");
+				return;
+			}
+			date=$("#date").val()
+			var cont=window.atob(data["content"]);
+			//alert(cont);
+			json = JSON.parse(cont);
+			assets=json["ASSETS"];
+			var flag=0;
+			for(var i=0;i<assets.length;i++){
+				if(assets[i]["date"]==date){
+					flag=1;
+					if($("#number").val()>=assets[i]["url"].length){
+						alert("失败：编号越界");
+					}
+					else {
+						alert("成功");
+						$("#ppt").attr("src",assets[i]["url"][$("#number").val()]);
+					}
+				}
+			}
+			if(flag==0){
+				alert("失败：没有该日期的文件");
+			}
+		});
+});
+
+});
+</script>
+<style>
+body,html{
+	margin:0;
+	height:100%;
+	width:100%;
+}
+</style>
+</head>
+<body>
+<div>
+<form action="">
+年级（如：初三）：<input type="text" name="grade" id="grade" ></input>
+科目（如：化学）：<input type="text" name="subject" id="subject"></input>
+日期（如：2020/2/24）：<input type="text" name="date" id="date"></input>
+编号：<input type="text" name="number" id="number" value="0"></input>
+</select>
+<a href="javascript:void(0)" id="bu">click me</a>
+</div>
+<iframe id="ppt"  frameborder="0" style="width:100%;height:100%"></iframe>
+<p>Powered by UnitedLC</p>
+<a href="https://gitee.com/unitedlc/network_class_ppt">repo地址</a>
+</body>
+</html>
