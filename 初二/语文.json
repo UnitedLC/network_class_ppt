@@ -1,11 +1,23 @@
-{"SUBJECT":"语文 CHINESE",
-"ASSETS":[
-	{
-		"date":"2020/2/21",
-		"url":["https://ppt2h5-1259648581.file.myqcloud.com/ggkrdfnr288u9d0om3pb/index.html"]
-	},
-	{
-		"date":"2020/2/24",
-		"url":["https://ppt2h5-1259648581.file.myqcloud.com/ghd4r4gpt8d981om29pb/index.html"]
-	}
-]}
+{
+    "ASSETS": [
+        {
+            "date": "2020/2/21",
+            "url": [
+                "https://ppt2h5-1259648581.file.myqcloud.com/ggkrdfnr288u9d0om3pb/index.html"
+            ]
+        },
+        {
+            "date": "2020/2/24",
+            "url": [
+                "https://ppt2h5-1259648581.file.myqcloud.com/ghd4r4gpt8d981om29pb/index.html"
+            ]
+        },
+        {
+            "date": "2020/2/25",
+            "url": [
+                "https://ppt2h5-1259648581.file.myqcloud.com/gui6alqqm2av6mrko9pb/index.html"
+            ]
+        }
+    ],
+    "SUBJECT": "语文 CHINESE"
+}
