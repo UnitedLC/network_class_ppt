@@ -1,7 +1,17 @@
 {
-	"SUBJECT": "化学 CHEMISTRY",
-	"ASSETS": [{
-		"date": "2020/2/24",
-		"url": ["https://ppt2h5-1259648581.file.myqcloud.com/0fe96598f986dcp5n9pb/index.html"]
-	}]
+    "ASSETS": [
+        {
+            "date": "2020/2/24",
+            "url": [
+                "https://ppt2h5-1259648581.file.myqcloud.com/0fe96598f986dcp5n9pb/index.html"
+            ]
+        },
+        {
+            "date": "2020/2/26",
+            "url": [
+                "https://ppt2h5-1259648581.file.myqcloud.com/gbujn225m1q6vp351bpb/index.html"
+            ]
+        }
+    ],
+    "SUBJECT": "化学 CHEMISTRY"
 }
