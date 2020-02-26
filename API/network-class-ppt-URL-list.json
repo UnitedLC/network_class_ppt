@@ -1,7 +1,10 @@
 {
     "ASSETS": [{
+            "id":"grade7",
+            "innerHTML":"Grade 7",
             "grade": 1,
-            "ASSETS_by_grade": [{
+            "ASSETS_by_grade": [
+                {
                 "ASSETS_by_subject": [{
                     "date": "2020/2/25",
                     "url": [
@@ -21,7 +24,10 @@
         },
         {
             "grade": 2,
-            "ASSETS_by_grade": [{
+            "id":"grade8",
+            "innerHTML":"Grade 8",
+            "ASSETS_by_grade": [
+                {
                     "SUBJECT": "地理 GEOGRAPHY",
                     "ASSETS_by_subject": [{
                             "date": "2020/2/20",
@@ -127,6 +133,8 @@
             ]
         }, {
             "grade": 3,
+            "id":"grade9",
+            "innerHTML":"Grade 9",
             "ASSETS_by_grade": [{
                 "SUBJECT": "化学 CHEMISTRY",
                 "ASSETS_by_subject": [{
