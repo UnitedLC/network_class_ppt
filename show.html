@@ -7,38 +7,102 @@
 
 </script>
 <script>
+var ppturl={};
 $(document).ready(function(){
-$("#bu").click(function(){
-	$.get("https://gitee.com/api/v5/repos/unitedlc/network_class_ppt/contents/"+$("#grade").val()+"/"+$("#subject").val()+".json",
+	$.get("https://gitee.com/api/v5/repos/unitedlc/network_class_ppt/contents/",
 		function(data,status){
-			if(status!="success"){
-				alert("失败：无法获得该年级/学科的信息");
-				return;
-			}
-			date=$("#date").val()
-			var cont=window.atob(data["content"]);
-			//alert(cont);
-			json = JSON.parse(cont);
-			assets=json["ASSETS"];
-			var flag=0;
-			for(var i=0;i<assets.length;i++){
-				if(assets[i]["date"]==date){
-					flag=1;
-					if($("#number").val()>=assets[i]["url"].length){
-						alert("失败：编号越界");
-					}
-					else {
-						alert("成功");
-						$("#ppt").attr("src",assets[i]["url"][$("#number").val()]);
-					}
+			//alert("ld");
+			for(var i=0;i<data.length;i++){
+				if(data[i]["type"]=="dir"){
+					//alert("asdfsdaf");
+					s=data[i]["name"];
+					$("#grade").append("<option value=\""+s+"\">"+s+"</option>")
 				}
 			}
-			if(flag==0){
-				alert("失败：没有该日期的文件");
+		}
+	);
+	$("#grade").change(
+		function(){
+			$("#subject").empty();
+			$("#subject").append("<option value=\"NULL\">     </option>");
+			$("#date").empty();
+			$("#date").append("<option value=\"NULL\">     </option>");
+			$.get("https://gitee.com/api/v5/repos/unitedlc/network_class_ppt/contents/"+$("#grade").val()+"/",
+				function(data,status){
+					for(var i=0;i<data.length;i++){
+						if(data[i]["type"]=="file"){
+							//alert(data[i]["name"]);
+							var s=data[i]["name"].split(".")[0];
+							$("#subject").append("<option value=\""+s+"\">"+s+"</option>");
+							
+							//gradelist.push(data[i]["name"]);
+						}
+					}
+				}
+			);
+		}
+	);
+	$("#subject").change(
+		function(){
+			if($("#subject").val()=="NULL")return;
+			$("#date").empty();
+			$("#date").append("<option value=\"NULL\">     </option>");
+			$.get("https://gitee.com/api/v5/repos/unitedlc/network_class_ppt/contents/"+$("#grade").val()+"/"+$("#subject").val()+".json",
+				function(data,status){
+					var cont=window.atob(data["content"]);
+					json = JSON.parse(cont);
+					assets=json["ASSETS"];
+					//alert(assets);
+					for(var i=0;i<assets.length;i++){
+						var s=assets[i]["date"];
+						$("#date").append("<option value=\""+s+"\">"+s+"</option>");
+						ppturl[s]=assets[i]["url"];
+						
+					}
+				}
+				);
 			}
-		});
-});
-
+				
+	);
+	function showppt(){
+		//alert(ppturl[$("#date").val()]);
+		$("#ppt").attr("src",ppturl[$("#date").val()][$("#number").val()-1]);
+	}
+	$("#date").change(
+		function(){
+			//alert($("#date").val());
+			if($("#date").val()=="NULL")return;
+			$("#number").empty();
+			for(var i=0;i<ppturl[$("#date").val()].length;i++)
+				$("#number").append("<option value=\""+(i+1)+"\">"+(i+1)+"</option>");
+			showppt();
+		}
+	);
+	$("#number").change(
+		showppt
+	);
+	var vu=["V","^"];
+	var vui=1;
+	$("#soubs").click(
+		function(){
+			$("#setting").slideToggle("slow");
+			vui=vui^1;
+			$("#toubn").text(vu[vui]);
+		}
+	);
+	$("#sodd").mouseenter(
+		function(){
+			//alert("asdfsad");
+			$("#soubs").fadeIn("slow");
+		}
+	);
+	$("#sodd").mouseleave(
+		function(){
+			//alert("loout");
+			if($("#toubn").text()=="^")return;
+			$("#soubs").fadeOut("slow");
+		}
+	);
 });
 </script>
 <style>
@@ -47,19 +111,87 @@ body,html{
 	height:100%;
 	width:100%;
 }
+#grade{
+	width:100px;
+}
+#subject{
+	width:100px;
+}
+#date{
+	width:180px;
+}
+
+option{
+	padding-bottom:20px;
+	padding-top:20px;
+	margin-bottom:20px;
+	margin-top:20px;
+}
+select {
+  /*text-align: center;*/
+  font-size:20px;
+  margin: 10px 10px;
+  padding: 16px 20px;
+  border: none;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+#setting{
+	width:40%;
+	position:fixed;
+	margin-left:30%;
+	margin-right:30%;
+	margin-top:20px;
+	text-align: center;
+	background-color:white;
+	border-radius:0px 0px 20px 20px;
+}
+#soubs{
+	width:40%;
+	position:fixed;
+	margin-left:30%;
+	margin-right:30%;
+	text-align: center;
+	background-color: #f1f1f1;
+	
+}
+#sodd{
+	width:100%;
+	position:fixed;
+	height:100px;
+}
+a{
+	margin-left:20px;
+	margin-right:20px;
+	padding-left:10px;
+	padding-right:10px;
+	padding-bottom:5px;
+	padding-top:5px;
+	text-decoration:none;
+	background-color: #f1f1f1;
+	border-radius: 5px;
+}
 </style>
 </head>
 <body>
-<div>
+<div id="sodd">
+<div id="setting">
 <form action="">
-年级（如：初三）：<input type="text" name="grade" id="grade" ></input>
-科目（如：化学）：<input type="text" name="subject" id="subject"></input>
-日期（如：2020/2/24）：<input type="text" name="date" id="date"></input>
-编号：<input type="text" name="number" id="number" value="0"></input>
+<select name="grade" id="grade"></select>
+<select name="subject" id="subject"></select>
+<select name="date" id="date"></select>
+第<select name="number" id="number"></select>份
 </select>
-<a href="javascript:void(0)" id="bu">click me</a>
-<p>Powered by UnitedLC <a href="https://gitee.com/unitedlc/network_class_ppt">repo地址</a></p>
+<p>Powered by UnitedLC <a href="https://gitee.com/unitedlc/network_class_ppt/" >项目地址</a></p>
 </div>
+<div id="soubs">
+<span id="toubn">^</span>
+</div>
+
+</div>
+<!--<a href="javascript:void(0)" id="bu">click me</a>
+<p>Powered by UnitedLC <a href="https://gitee.com/unitedlc/network_class_ppt">repo地址</a></p>-->
+
 <iframe id="ppt"  frameborder="0" style="width:100%;height:100%"></iframe>
 
 </body>
